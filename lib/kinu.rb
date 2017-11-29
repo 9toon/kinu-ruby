@@ -15,7 +15,7 @@ module Kinu
   def self.base_upload_uri
     host = config.upload_host || config.host
     raise "Kinu.config.upload_host and Kinu.config.upload_host is not set. Please set one or the other." unless host
-    http_class.build(host: host, port: config.port)
+    upload_http_class.build(host: host, port: config.upload_port)
   end
 
   def self.configure
@@ -30,5 +30,9 @@ module Kinu
 
   def self.http_class
     config.ssl? ? URI::HTTPS : URI::HTTP
+  end
+
+  def self.upload_http_class
+    config.upload_ssl? ? URI::HTTPS : URI::HTTP
   end
 end

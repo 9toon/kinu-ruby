@@ -103,5 +103,23 @@ RSpec.describe Kinu do
         is_expected.to eq(URI::HTTPS.build(host: upload_host))
       end
     end
+
+    context 'when set hostname to upload_host and ssl enabled but upload_ssl disabled' do
+      let(:upload_host) { 'upload.example.com' }
+      let(:ssl) { true }
+      let(:upload_ssl) { false }
+
+      before do
+        Kinu.configure do |config|
+          config.upload_host = upload_host
+          config.ssl = ssl
+          config.upload_ssl = upload_ssl
+        end
+      end
+
+      it 'returns http url' do
+        is_expected.to eq(URI::HTTP.build(host: upload_host))
+      end
+    end
   end
 end

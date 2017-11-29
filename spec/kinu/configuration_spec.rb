@@ -106,6 +106,63 @@ module Kinu
       end
     end
 
+    describe '#upload_port' do
+      context 'when no configuration' do
+        it 'returns 80' do
+          expect(config.upload_port).to eq(80)
+        end
+      end
+
+      context 'when set upload_ssl' do
+        before do
+          config.upload_ssl = true
+        end
+
+        it 'returns 443' do
+          expect(config.upload_port).to eq(443)
+        end
+      end
+
+      context 'when set upload_port' do
+        let(:upload_port) { 3000 }
+        before do
+          config.upload_port = upload_port
+        end
+
+        it 'returns same upload_port' do
+          expect(config.upload_port).to eq(upload_port)
+        end
+      end
+    end
+
+    describe '#upload_ssl?' do
+      context 'when no configuration' do
+        it 'returns false' do
+          expect(config.upload_ssl?).to be_falsy
+        end
+
+        context 'when set ssl' do
+          before do
+            config.ssl = true
+          end
+
+          it 'returns true' do
+            expect(config.upload_ssl?).to be_truthy
+          end
+        end
+      end
+
+      context 'when set true' do
+        before do
+          config.upload_ssl = true
+        end
+
+        it 'returns true' do
+          expect(config.upload_ssl?).to be_truthy
+        end
+      end
+    end
+
     describe '#scheme' do
       context 'when no configuration' do
         it 'returns http' do
